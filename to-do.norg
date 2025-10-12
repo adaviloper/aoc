@@ -1,0 +1,11 @@
+* To Do
+
+** Past Due (1)
+   - (x) 2025-10-01 - `aoc build {year} {day}` runs all files for a specific day in a given year
+
+** Completed (4)
+   - (x) 2025-10-01 - `aoc run {year} {day}` runs all files for a specific day in a given year
+   - (x) 2025-10-01 - `aoc build {day}` runs all files for a specific day
+   - (x) 2025-10-01 - `aoc run {day}` runs all files for a specific day
+   - (x) 2025-10-01 - `aoc build {year}` runs all files for a specific day in a given year
+
