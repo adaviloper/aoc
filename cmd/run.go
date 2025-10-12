@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"os/exec"
 
-	"github.com/adaviloper/advent-of-code/aoc/internal"
+	"github.com/adaviloper/aoc/internal"
 	"github.com/spf13/cobra"
 )
 
