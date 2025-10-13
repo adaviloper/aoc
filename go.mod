@@ -9,9 +9,4 @@ require (
 	github.com/spf13/pflag v1.0.9 // indirect
 )
 
-require (
-	github.com/adaviloper/aoc v0.0.0-20251012233414-8eeafcbaf3d3
-	utils v1.0.0
-)
-
-replace utils => ./utils
+require github.com/adaviloper/aoc v0.0.0-20251012233414-8eeafcbaf3d3
