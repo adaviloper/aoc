@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"os/exec"
 
-	"internal/utils"
+	"utils"
 	"github.com/spf13/cobra"
 )
 

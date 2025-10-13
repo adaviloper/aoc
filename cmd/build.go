@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"internal/utils"
+	"utils"
 	"github.com/spf13/cobra"
 )
 

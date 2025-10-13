@@ -11,7 +11,7 @@ require (
 
 require (
 	github.com/adaviloper/aoc v0.0.0-20251012233414-8eeafcbaf3d3
-	internal/utils v1.0.0
+	utils v1.0.0
 )
 
-replace internal/utils => ./internal/utils
+replace utils => ./utils
