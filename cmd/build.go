@@ -97,7 +97,6 @@ func init() {
 func createMainPuzzleFile(year int, day int) {
     // Also create a test.ts file with an empty string if it doesn't exist
     // puzzleFilePath := filepath.Join(dayDir, fmt.Sprintf("main.%s", cfg.TemplateLang))
-    fmt.Sprintf("hit %s", year, day)
     puzzleFilePath := fmt.Sprintf("%s/%d/%02d/main.%s", cfg.BaseDirectory, year, day, cfg.TemplateLang)
     if utils.FileExists(puzzleFilePath) {
         fmt.Printf("main.%s already exists at %s, skipping.\n", cfg.TemplateLang, puzzleFilePath)
