@@ -167,7 +167,7 @@ func writeTSDataFile(path string, input string) error {
     escaped := strings.ReplaceAll(input, "`", "\\`")
     escaped = strings.ReplaceAll(escaped, "${", "\\${")
 
-    content := fmt.Sprintf("export const data = `\n%s`\n", escaped)
+    content := fmt.Sprintf("export const data = `\n%s\n`;\n", escaped)
 
     if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
         return fmt.Errorf("failed to write %s: %w", path, err)
