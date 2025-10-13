@@ -4,6 +4,7 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"aoc/utils"
 	"errors"
 	"fmt"
 	"io"
@@ -13,7 +14,6 @@ import (
 	"strings"
 	"time"
 
-	"utils"
 	"github.com/spf13/cobra"
 )
 
