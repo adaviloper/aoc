@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/adaviloper/aoc/internal"
+	"internal/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +24,7 @@ var buildCmd = &cobra.Command{
     Long:  "Creates <YYYY>/<DD>/ and writes data.ts with Advent of Code input using AOC_SESSION.",
     Args: cobra.MaximumNArgs(2),
     RunE: func(cmd *cobra.Command, args []string) error {
-        year, day, err := internal.GetDateForPuzzle(args)
+        year, day, err := utils.GetDateForPuzzle(args)
         if err != nil {
         	return err
         }
@@ -42,7 +42,7 @@ var buildCmd = &cobra.Command{
         }
 
         dataFilePath := filepath.Join(dayDir, fmt.Sprintf("data.%s", cfg.TemplateLang))
-        if internal.FileExists(dataFilePath) {
+        if utils.FileExists(dataFilePath) {
             // If it exists, do not overwrite to avoid losing edits
             fmt.Printf("data.%s already exists at %s, skipping.\n", cfg.TemplateLang, dataFilePath)
         } else {
@@ -65,7 +65,7 @@ var buildCmd = &cobra.Command{
 
         // Also create a test file with an empty string if it doesn't exist
         testFilePath := filepath.Join(dayDir, fmt.Sprintf("test.%s", cfg.TemplateLang))
-        if internal.FileExists(testFilePath) {
+        if utils.FileExists(testFilePath) {
             fmt.Printf("test.%s already exists at %s, skipping.\n", cfg.TemplateLang, testFilePath)
         } else {
             if err := writeTSDataFile(testFilePath, "update me"); err != nil {
@@ -99,7 +99,7 @@ func createMainPuzzleFile(year int, day int) {
     // puzzleFilePath := filepath.Join(dayDir, fmt.Sprintf("main.%s", cfg.TemplateLang))
     fmt.Sprintf("hit %s", year, day)
     puzzleFilePath := fmt.Sprintf("%s/%d/%02d/main.%s", cfg.BaseDirectory, year, day, cfg.TemplateLang)
-    if internal.FileExists(puzzleFilePath) {
+    if utils.FileExists(puzzleFilePath) {
         fmt.Printf("main.%s already exists at %s, skipping.\n", cfg.TemplateLang, puzzleFilePath)
     } else {
         if err := writeEmptyPuzzleFile(puzzleFilePath, year, day); err != nil {
@@ -117,7 +117,7 @@ func resolveYearRootDirectory(baseDir string, year int) (string, error) {
 
     // Prefer ./<year> if it exists
     dir := filepath.Join(baseDir, yearName)
-    if internal.DirExists(dir) {
+    if utils.DirExists(dir) {
         return dir, nil
     }
 

@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"os/exec"
 
-	"github.com/adaviloper/aoc/internal"
+	"internal/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -31,7 +31,7 @@ Examples:
 - aoc run 2024 05    # run 2024 Day 05
 - aoc run 17         # run Day 17 of the inferred AoC year`,
     RunE: func(cmd *cobra.Command, args []string) error {
-        year, day, err := internal.GetDateForPuzzle(args)
+        year, day, err := utils.GetDateForPuzzle(args)
         if err != nil {
             return err
         }
@@ -58,7 +58,7 @@ var useReal bool
 
 func runPuzzleSection(year int, day int, useReal bool) error {
     filePath := fmt.Sprintf("%s/%d/%02d/main.%s", cfg.BaseDirectory, year, day, cfg.TemplateLang)
-	if !internal.FileExists(filePath) {
+	if !utils.FileExists(filePath) {
 		fmt.Printf("[%s] does not exist\n", filePath)
 		return fmt.Errorf("[%s] does not exist\n", filePath)
 	}
