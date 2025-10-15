@@ -4,17 +4,18 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-    "errors"
-    "fmt"
-    "io"
-    "net/http"
-    "os"
-    "path/filepath"
-    "strings"
-    "time"
+	"errors"
+	"fmt"
+	"io"
+	"net/http"
+	"os"
+	"path/filepath"
+	"strings"
+	"time"
 
-    "github.com/adaviloper/aoc/utils"
-    "github.com/spf13/cobra"
+	"github.com/adaviloper/aoc/printUtils"
+	"github.com/adaviloper/aoc/utils"
+	"github.com/spf13/cobra"
 )
 
 // buildCmd represents the build command
@@ -44,7 +45,7 @@ var buildCmd = &cobra.Command{
         dataFilePath := filepath.Join(dayDir, fmt.Sprintf("data.%s", cfg.TemplateLang))
         if utils.FileExists(dataFilePath) {
             // If it exists, do not overwrite to avoid losing edits
-            fmt.Printf("data.%s already exists at %s, skipping.\n", cfg.TemplateLang, dataFilePath)
+            printUtils.Warn(fmt.Sprintf("data.%s already exists at %s, skipping.", cfg.TemplateLang, dataFilePath))
         } else {
             // Fetch input from Advent of Code
             session := os.Getenv("AOC_SESSION")
@@ -60,18 +61,18 @@ var buildCmd = &cobra.Command{
             if err := writeTSDataFile(dataFilePath, input); err != nil {
                 return err
             }
-            fmt.Printf("Wrote %s\n", dataFilePath)
+            printUtils.Success(fmt.Sprintf("Wrote %s", dataFilePath))
         }
 
         // Also create a test file with an empty string if it doesn't exist
         testFilePath := filepath.Join(dayDir, fmt.Sprintf("test.%s", cfg.TemplateLang))
         if utils.FileExists(testFilePath) {
-            fmt.Printf("test.%s already exists at %s, skipping.\n", cfg.TemplateLang, testFilePath)
+            printUtils.Warn(fmt.Sprintf("test.%s already exists at %s, skipping.", cfg.TemplateLang, testFilePath))
         } else {
             if err := writeTSDataFile(testFilePath, "update me"); err != nil {
                 return err
             }
-            fmt.Printf("Wrote %s\n", testFilePath)
+            printUtils.Success(fmt.Sprintf("Wrote %s", testFilePath))
         }
 
         createMainPuzzleFile(year, day)
@@ -99,12 +100,12 @@ func createMainPuzzleFile(year int, day int) {
     // puzzleFilePath := filepath.Join(dayDir, fmt.Sprintf("main.%s", cfg.TemplateLang))
     puzzleFilePath := fmt.Sprintf("%s/%d/%02d/main.%s", cfg.BaseDirectory, year, day, cfg.TemplateLang)
     if utils.FileExists(puzzleFilePath) {
-        fmt.Printf("main.%s already exists at %s, skipping.\n", cfg.TemplateLang, puzzleFilePath)
+        printUtils.Warn(fmt.Sprintf("main.%s already exists at %s, skipping.", cfg.TemplateLang, puzzleFilePath))
     } else {
         if err := writeEmptyPuzzleFile(puzzleFilePath, year, day); err != nil {
             return
         }
-        fmt.Printf("Wrote %s\n", puzzleFilePath)
+        printUtils.Success(fmt.Sprintf("Wrote %s", puzzleFilePath))
     }
 }
 
@@ -181,8 +182,8 @@ func writeEmptyPuzzleFile(path string, year int, day int) error {
 
 import { data as realData } from './data.%s';
 import { data as testData } from './test.%s';
-import * as helpers from '../../../utils/helpers.%s';
-import * as utils from '../../../utils/types.%s';
+import * as helpers from '../../utils/helpers.%s';
+import * as utils from '../../utils/types.%s';
 
 const input = Deno.args.includes('--real') ? realData : testData;
 

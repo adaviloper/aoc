@@ -4,11 +4,12 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-    "fmt"
-    "os/exec"
+	"fmt"
+	"os/exec"
 
-    "github.com/adaviloper/aoc/utils"
-    "github.com/spf13/cobra"
+	"github.com/adaviloper/aoc/printUtils"
+	"github.com/adaviloper/aoc/utils"
+	"github.com/spf13/cobra"
 )
 
 // runCmd represents the run command
@@ -74,7 +75,7 @@ func runPuzzleSection(year int, day int, useReal bool) error {
         return fmt.Errorf("deno failed: %w\n%s", err, string(output))
     }
 
-	fmt.Printf("Results for December %d, %d:\n", day, year)
+	printUtils.Info(fmt.Sprintf("Results for December %d, %d:\n", day, year))
     fmt.Printf("%s\n", string(output))
 
 	return nil
