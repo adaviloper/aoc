@@ -4,11 +4,11 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"aoc/utils"
-	"fmt"
-	"os/exec"
+    "fmt"
+    "os/exec"
 
-	"github.com/spf13/cobra"
+    "github.com/adaviloper/aoc/utils"
+    "github.com/spf13/cobra"
 )
 
 // runCmd represents the run command

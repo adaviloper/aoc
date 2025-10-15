@@ -4,17 +4,17 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"aoc/utils"
-	"errors"
-	"fmt"
-	"io"
-	"net/http"
-	"os"
-	"path/filepath"
-	"strings"
-	"time"
+    "errors"
+    "fmt"
+    "io"
+    "net/http"
+    "os"
+    "path/filepath"
+    "strings"
+    "time"
 
-	"github.com/spf13/cobra"
+    "github.com/adaviloper/aoc/utils"
+    "github.com/spf13/cobra"
 )
 
 // buildCmd represents the build command
