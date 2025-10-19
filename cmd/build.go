@@ -15,6 +15,7 @@ import (
 
 	"github.com/adaviloper/aoc/printUtils"
 	"github.com/adaviloper/aoc/utils"
+    "github.com/adaviloper/aoc/config"
 	"github.com/spf13/cobra"
 )
 
@@ -31,7 +32,7 @@ var buildCmd = &cobra.Command{
         }
 
         // Resolve base directory for assumed year
-        yearDir, err := resolveYearRootDirectory(cfg.BaseDirectory, year)
+        yearDir, err := resolveYearRootDirectory(config.Cfg.BaseDirectory, year)
         if err != nil {
             return err
         }
@@ -42,10 +43,10 @@ var buildCmd = &cobra.Command{
             return fmt.Errorf("failed to create day directory %s: %w", dayDir, err)
         }
 
-        dataFilePath := filepath.Join(dayDir, fmt.Sprintf("data.%s", cfg.TemplateLang))
+        dataFilePath := filepath.Join(dayDir, fmt.Sprintf("data.%s", config.Cfg.TemplateLang))
         if utils.FileExists(dataFilePath) {
             // If it exists, do not overwrite to avoid losing edits
-            printUtils.Warn(fmt.Sprintf("data.%s already exists at %s, skipping.", cfg.TemplateLang, dataFilePath))
+            printUtils.Warn(fmt.Sprintf("data.%s already exists at %s, skipping.", config.Cfg.TemplateLang, dataFilePath))
         } else {
             // Fetch input from Advent of Code
             session := os.Getenv("AOC_SESSION")
@@ -65,9 +66,9 @@ var buildCmd = &cobra.Command{
         }
 
         // Also create a test file with an empty string if it doesn't exist
-        testFilePath := filepath.Join(dayDir, fmt.Sprintf("test.%s", cfg.TemplateLang))
+        testFilePath := filepath.Join(dayDir, fmt.Sprintf("test.%s", config.Cfg.TemplateLang))
         if utils.FileExists(testFilePath) {
-            printUtils.Warn(fmt.Sprintf("test.%s already exists at %s, skipping.", cfg.TemplateLang, testFilePath))
+            printUtils.Warn(fmt.Sprintf("test.%s already exists at %s, skipping.", config.Cfg.TemplateLang, testFilePath))
         } else {
             if err := writeTSDataFile(testFilePath, "update me"); err != nil {
                 return err
@@ -98,9 +99,9 @@ func init() {
 func createMainPuzzleFile(year int, day int) {
     // Also create a test.ts file with an empty string if it doesn't exist
     // puzzleFilePath := filepath.Join(dayDir, fmt.Sprintf("main.%s", cfg.TemplateLang))
-    puzzleFilePath := fmt.Sprintf("%s/%d/%02d/main.%s", cfg.BaseDirectory, year, day, cfg.TemplateLang)
+    puzzleFilePath := fmt.Sprintf("%s/%d/%02d/main.%s", config.Cfg.BaseDirectory, year, day, config.Cfg.TemplateLang)
     if utils.FileExists(puzzleFilePath) {
-        printUtils.Warn(fmt.Sprintf("main.%s already exists at %s, skipping.", cfg.TemplateLang, puzzleFilePath))
+        printUtils.Warn(fmt.Sprintf("main.%s already exists at %s, skipping.", config.Cfg.TemplateLang, puzzleFilePath))
     } else {
         if err := writeEmptyPuzzleFile(puzzleFilePath, year, day); err != nil {
             return
@@ -199,7 +200,7 @@ const p2 = (input) => {
 
 console.log(p1(input));
 console.log(p2(input));
-`, year, day, cfg.TemplateLang, cfg.TemplateLang, cfg.TemplateLang, cfg.TemplateLang)
+`, year, day, config.Cfg.TemplateLang, config.Cfg.TemplateLang, config.Cfg.TemplateLang, config.Cfg.TemplateLang)
 
     if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
         return fmt.Errorf("failed to write %s: %w", path, err)

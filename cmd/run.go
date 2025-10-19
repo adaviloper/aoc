@@ -9,6 +9,7 @@ import (
 
 	"github.com/adaviloper/aoc/printUtils"
 	"github.com/adaviloper/aoc/utils"
+    "github.com/adaviloper/aoc/config"
 	"github.com/spf13/cobra"
 )
 
@@ -58,7 +59,7 @@ func init() {
 var useReal bool
 
 func runPuzzleSection(year int, day int, useReal bool) error {
-    filePath := fmt.Sprintf("%s/%d/%02d/main.%s", cfg.BaseDirectory, year, day, cfg.TemplateLang)
+    filePath := fmt.Sprintf("%s/%d/%02d/main.%s", config.Cfg.BaseDirectory, year, day, config.Cfg.TemplateLang)
 	if !utils.FileExists(filePath) {
 		fmt.Printf("[%s] does not exist\n", filePath)
 		return fmt.Errorf("[%s] does not exist\n", filePath)

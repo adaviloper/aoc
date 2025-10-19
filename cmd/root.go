@@ -4,21 +4,13 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-    "encoding/json"
-    "log"
     "os"
-    "path/filepath"
-    "strings"
 
     "github.com/spf13/cobra"
+    "github.com/adaviloper/aoc/config"
 )
 
-type Config struct {
-	BaseDirectory string `json:"base_directory"`
-	TemplateLang string `json:"template_language"`
-}
-
-var cfg Config
+// Configuration struct and instance moved to package config
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -76,37 +68,8 @@ var rootCmd = &cobra.Command{
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-    homeDir := os.Getenv("HOME")
-    configDir := filepath.Join(homeDir, ".config", "aoc")
-    configPath := filepath.Join(configDir, "config.json")
-
-    // Try to read existing config; if missing, create defaults and write file
-    if data, err := os.ReadFile(configPath); err == nil {
-        if unmarshalErr := json.Unmarshal(data, &cfg); unmarshalErr != nil {
-            log.Fatal("Error during Unmarshal(): ", unmarshalErr)
-        }
-    } else {
-        // Defaults: BaseDirectory = $PWD/advent-of-code, TemplateLang = ts
-        cwd, cwdErr := os.Getwd()
-        if cwdErr != nil {
-            log.Fatal("failed to get current working directory: ", cwdErr)
-        }
-        cfg = Config{
-            BaseDirectory: filepath.Join(cwd, "advent-of-code"),
-            TemplateLang:  "ts",
-        }
-        // Ensure config directory exists and write the file
-        if mkErr := os.MkdirAll(configDir, 0o755); mkErr == nil {
-            if jsonBytes, mErr := json.MarshalIndent(cfg, "", "  "); mErr == nil {
-                _ = os.WriteFile(configPath, jsonBytes, 0o644)
-            }
-        }
-    }
-
-    // Expand ~ in BaseDirectory if present
-    if strings.HasPrefix(cfg.BaseDirectory, "~") {
-        cfg.BaseDirectory = strings.Replace(cfg.BaseDirectory, "~", homeDir, 1)
-    }
+    // Initialize global configuration
+    config.Init()
 
     if err := rootCmd.Execute(); err != nil {
         os.Exit(1)
